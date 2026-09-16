@@ -1,97 +1,81 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAMPLE WEBSITE - Mhow Mart</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mhow Mart - Apni Dukaan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Segoe UI',sans-serif; margin:0; background:#f5f7ff;}
-.header{background:linear-gradient(90deg,#6a11cb,#2575fc); color:white; padding:15px; text-align:center; position:sticky; top:0; z-index:100;}
-.offer{background:#ffeb3b; color:#d32f2f; padding:10px; text-align:center; font-weight:bold;}
-.pincode-box{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center; z-index:9999;}
-.pincode-card{background:white; padding:30px; border-radius:15px; text-align:center; width:300px;}
-.pincode-card input{padding:12px; width:85%; border:2px solid #6a11cb; border-radius:8px; margin:10px 0;}
-.pincode-card button{background:#6a11cb; color:white; padding:12px 20px; border:none; border-radius:8px; width:90%; cursor:pointer; font-weight:bold;}
-.category{display:flex; gap:15px; justify-content:center; margin:20px;}
-.cat-card{background:white; padding:20px; border-radius:15px; width:140px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); cursor:pointer;}
-.products{display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:15px;}
-.prod{background:white; border-radius:15px; padding:10px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
-.prod img{width:100%; height:120px; object-fit:cover; border-radius:10px;}
-.price{color:#2575fc; font-weight:bold;}
-.old-price{text-decoration:line-through; color:gray; font-size:13px;}
-.order-btn{background:#25D366; color:white; border:none; padding:10px 15px; border-radius:20px; margin-top:8px; cursor:pointer; width:100%; font-weight:bold;}
-.footer{background:#222; color:white; padding:20px; margin-top:20px; text-align:center;}
-.feedback input,.feedback textarea{width:90%; padding:10px; margin:5px; border-radius:8px; border:none;}
+*{font-family:'Poppins',sans-serif; box-sizing:border-box}
+body{margin:0; background:#f8f9ff;}
+.header{position:sticky; top:0; z-index:100; background:white; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 15px rgba(0,0,0,0.08);}
+.logo{font-weight:700; font-size:20px; color:#6a11cb;}
+.cart-icon{background:#6a11cb; color:white; padding:8px 15px; border-radius:25px; cursor:pointer; font-weight:600;}
+.offer{background:linear-gradient(90deg,#ff9a00,#ff6a00); color:white; text-align:center; padding:8px; font-size:13px; font-weight:600;}
+.cats{display:flex; gap:12px; padding:15px; overflow:auto;}
+.cat{background:white; border:2px solid #eee; padding:12px 18px; border-radius:30px; white-space:nowrap; cursor:pointer; font-weight:600;}
+.cat.active{background:#6a11cb; color:white; border-color:#6a11cb;}
+.products{display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px;}
+.prod{background:white; border-radius:18px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); padding:10px;}
+.prod img{width:100%; height:110px; object-fit:cover; border-radius:12px;}
+.prod h4{font-size:13px; margin:8px 0 4px; height:32px; overflow:hidden;}
+.qty-box{display:flex; align-items:center; justify-content:space-between; background:#f3f0ff; border-radius:10px; padding:5px; margin:8px 0;}
+.qty-box button{border:none; background:white; width:28px; height:28px; border-radius:50%; font-weight:bold; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+.add-btn{width:100%; background:#6a11cb; color:white; border:none; padding:10px; border-radius:12px; font-weight:600; cursor:pointer;}
+.price{color:#6a11cb; font-weight:700;}.old{font-size:11px; color:gray; text-decoration:line-through;}
+#cartDrawer{position:fixed; bottom:0; left:0; width:100%; background:white; border-radius:25px 25px 0 0; box-shadow:0 -5px 30px rgba(0,0,0,0.2); transform:translateY(100%); transition:0.3s; z-index:200; max-height:85vh; overflow:auto; padding:20px;}
+#cartDrawer.open{transform:translateY(0);}
+.cart-item{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;}
+.checkout{width:100%; background:#25D366; color:white; border:none; padding:14px; border-radius:15px; font-size:16px; font-weight:700; margin-top:15px;}
+#pincodeGate{position:fixed; inset:0; background:rgba(0,0,0,0.92); display:flex; align-items:center; justify-content:center; z-index:9999;}
+.pin-card{background:white; padding:25px; border-radius:20px; width:310px; text-align:center;}
 </style>
 </head>
 <body>
 
-<div id="pincodeGate" class="pincode-box">
-  <div class="pincode-card">
-    <h2>📍 Only For Mhow</h2>
-    <p>Ye site sirf <b>Mhow (453441)</b> ke liye hai</p>
-    <input type="text" id="pincodeInput" placeholder="Pincode Dale - 453441">
-    <button onclick="checkPincode()">Enter Store</button>
-    <p id="pinError" style="color:red; display:none;">Sirf 453441 allowed hai</p>
-  </div>
+<div id="pincodeGate"><div class="pin-card"><h2>📍 Mhow Mart</h2><p>Only for <b>Mhow - 453441</b></p><input id="pinIn" placeholder="Pincode 453441" style="width:90%; padding:12px; border:2px solid #6a11cb; border-radius:10px; margin:10px 0;"><br><button onclick="checkPin()" style="width:95%; padding:12px; background:#6a11cb; color:white; border:none; border-radius:10px; font-weight:600;">Enter Store</button><p id="pinErr" style="color:red; display:none; font-size:13px;">Sirf 453441 allowed hai</p></div></div>
+
+<div class="header"><div class="logo">Mhow Mart 🛒</div><div class="cart-icon" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div></div>
+<div class="offer">🎉 Rs.100 wala item sirf Rs.79 me! + Delivery Rs.5</div>
+
+<div class="cats">
+  <div class="cat active" onclick="filterCat('plastic',this)">🪣 Plastic Items</div>
+  <div class="cat" onclick="filterCat('kirana',this)">🌾 Kirana</div>
 </div>
 
-<div class="header">
-  <h1 style="margin:0;">SAMPLE WEBSITE</h1>
-  <p style="margin:0; font-size:13px;">Mhow ka Apna Mart</p>
-</div>
-<div class="offer">🎉 GANESH CHATURTHI OFFER: Rs 100 wali item sirf Rs 79 me! 🎉</div>
+<div class="products" id="productList"></div>
 
-<div class="category">
-  <div class="cat-card" onclick="showCategory('plastic')"><div style="font-size:40px;">🪣</div><h3>Plastic Items</h3></div>
-  <div class="cat-card" onclick="showCategory('kirana')"><div style="font-size:40px;">🌾</div><h3>Kirana</h3></div>
-</div>
-
-<div id="productArea"><h2 style="text-align:center;" id="catTitle">Category Choose Kare</h2><div class="products" id="products"></div></div>
-
-<div style="background:white; margin:15px; padding:15px; border-radius:12px; text-align:center;">
-  <b>💰 Delivery Charge: Rs 5 Only</b> | <b>💵 Cash On Delivery</b>
-</div>
-
-<div class="footer">
-  <h3>📍 Offline Store</h3><p>Khan Colony, Mhow, MP - 453441</p>
-  <a href="https://maps.google.com/?q=Mhow" style="color:#25D366;">Google Map</a>
-  <div class="feedback" style="margin-top:20px;">
-    <h3>Feedback Do</h3><input type="text" placeholder="Apna Naam"><textarea placeholder="Kaisa laga?"></textarea><br>
-    <button class="order-btn" style="width:50%; background:#6a11cb;" onclick="alert('Thanks for feedback!')">Submit</button>
-  </div>
+<div id="cartDrawer">
+  <div style="display:flex; justify-content:space-between;"><h3 style="margin:0;">Your Cart</h3><span onclick="toggleCart()" style="cursor:pointer;">❌</span></div>
+  <div id="cartItems" style="margin-top:10px;"><p style="color:gray; text-align:center;">Cart khali hai</p></div>
+  <div id="cartTotal" style="font-weight:700; margin-top:10px;"></div>
+  <button class="checkout" onclick="orderWhatsApp()">WhatsApp pe Order Karo</button>
 </div>
 
 <script>
-const allProducts = {
-  plastic: [
-    {name:"Plastic Tub - 20L", price:100, offerPrice:79, img:"https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f"},
-    {name:"Plastic Mug", price:40, offerPrice:40, img:"https://images.unsplash.com/photo-1607613009820-a29f7bb81c04"}
-  ],
-  kirana: [
-    {name:"Toor Dal - 1KG", price:120, offerPrice:79, img:"https://images.unsplash.com/photo-1586201375761-83865001e31c"},
-    {name:"Besan - 1KG", price:90, offerPrice:79, img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b"}
-  ]
+let cart = [];
+const prods = {
+ plastic:[{id:1,name:"Plastic Tub 20L",price:100,offer:79,img:"https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f"},{id:2,name:"Plastic Mug Strong",price:50,offer:35,img:"https://images.unsplash.com/photo-1607613009820-a29f7bb81c04"}],
+ kirana:[{id:3,name:"Toor Dal 1KG Premium",price:120,offer:79,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c"},{id:4,name:"Besan 1KG",price:90,offer:79,img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b"}]
 };
-function checkPincode(){
-  let pin = document.getElementById('pincodeInput').value;
-  if(pin === "453441"){ document.getElementById('pincodeGate').style.display="none"; }
-  else { document.getElementById('pinError').style.display="block"; }
+function checkPin(){ if(document.getElementById('pinIn').value==='453441'){document.getElementById('pincodeGate').style.display='none';}else{document.getElementById('pinErr').style.display='block';} }
+function render(cat){
+ let list=prods[cat]; let h='';
+ list.forEach(p=>{
+   let q = (cart.find(c=>c.id===p.id)?.qty)||0;
+   h+=`<div class="prod"><img src="${p.img}"><h4>${p.name}</h4><div><span class="old">Rs ${p.price}</span> <span class="price">Rs ${p.offer}</span></div>
+   <div class="qty-box"><button onclick="changeQty(${p.id},-1)">-</button><span id="q-${p.id}">${q}</span><button onclick="changeQty(${p.id},1)">+</button></div>
+   <button class="add-btn" onclick="addToCart(${p.id},'${cat}')">Add to Cart</button></div>`;
+ });
+ document.getElementById('productList').innerHTML=h;
 }
-function showCategory(cat){
-  document.getElementById('catTitle').innerText = cat === 'plastic'? 'Plastic Items' : 'Kirana Items';
-  let html = "";
-  allProducts[cat].forEach(p => {
-    let total = p.offerPrice + 5;
-    html += `<div class="prod"><img src="${p.img}"><h4>${p.name}</h4><span class="old-price">Rs ${p.price}</span> <span class="price">Rs ${p.offerPrice}</span><p style="font-size:12px;">+5 Delivery = Rs ${total}</p><button class="order-btn" onclick="orderNow('${p.name}', ${total})">Order Now</button></div>`;
-  });
-  document.getElementById('products').innerHTML = html;
-}
-function orderNow(productName, totalPrice){
-  let whatsappNumber = "91xxxxxxxxxx";
-  let message = `*NEW ORDER*%0AProduct: ${productName}%0ATotal: Rs ${totalPrice}%0APincode: 453441%0ACOD`;
-  window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
-}
+function changeQty(id,delta){let item=cart.find(c=>c.id===id);let prod=[...prods.plastic,...prods.kirana].find(p=>p.id===id);if(!item&&delta>0){cart.push({id:prod.id,name:prod.name,offer:prod.offer,qty:1});}else if(item){item.qty+=delta; if(item.qty<=0) cart=cart.filter(c=>c.id!==id);} document.getElementById(`q-${id}`).innerText=cart.find(c=>c.id===id)?.qty||0; updateCart();}
+function addToCart(id,cat){let prod=[...prods.plastic,...prods.kirana].find(p=>p.id===id);let item=cart.find(c=>c.id===id);if(!item) cart.push({id:prod.id,name:prod.name,offer:prod.offer,qty:1});else item.qty++; render(cat); updateCart(); toggleCart(true);}
+function updateCart(){document.getElementById('cartCount').innerText=cart.reduce((s,c)=>s+c.qty,0); if(cart.length===0){document.getElementById('cartItems').innerHTML='<p style="color:gray; text-align:center;">Cart khali hai</p>'; document.getElementById('cartTotal').innerText=''; return;} let html=''; let total=0; cart.forEach(c=>{let t=c.offer*c.qty+5; total+=t; html+=`<div class="cart-item"><div>${c.name} x ${c.qty}</div><div>Rs ${t} <span style="color:gray; font-size:11px;">(inc 5 delivery)</span></div></div>`;}); document.getElementById('cartItems').innerHTML=html; document.getElementById('cartTotal').innerText='Total Payable: Rs '+total;}
+function toggleCart(forceOpen){let d=document.getElementById('cartDrawer'); if(forceOpen===true) d.classList.add('open'); else d.classList.toggle('open');}
+function filterCat(cat,el){document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active')); el.classList.add('active'); render(cat);}
+function orderWhatsApp(){if(cart.length===0){alert('Cart khali hai!');return;} let num="919876543210"; let msg="*Mhow Mart Order*%0A"; cart.forEach(c=>{msg+=`${c.name} x ${c.qty} = Rs ${c.offer*c.qty+5}%0A`;}); let total=cart.reduce((s,c)=>s+c.offer*c.qty+5,0); msg+=`%0A*Total: Rs ${total}*%0APincode: 453441%0ACOD`; window.open(`https://wa.me/${num}?text=${msg}`,'_blank');}
+render('plastic');
 </script>
 </body>
 </html>
+    
